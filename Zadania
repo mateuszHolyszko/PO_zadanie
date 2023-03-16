@@ -1,0 +1,193 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        //lab02_zad1();
+        //lab02_zad2();
+        //lab02_zad5();
+        //lab02_zad6();
+        //lab02_zad7();
+        //lab03_zad1();
+        //lab03_zad2();
+        //lab03_zad3();
+        //lab03_zad4();
+        //lab03_zad5();
+    }
+    public static double getDouble(String promt){
+        System.out.format(promt);
+        Scanner in = new Scanner(System.in);
+        return in.nextDouble();
+    }
+    public static void lab02_zad1() {
+        double a=getDouble("a: ");
+        double b=getDouble("\nb: ");
+        double c=getDouble("\nc: ");
+        double delta=Math.pow(b,2)-4*(a*c);
+        if(delta < 0){
+            System.out.format("Niema pierwiastków");
+        }else if(delta == 0){
+            System.out.format("Pierwiastek 1: %f",-b/2*a);
+        }else{
+            System.out.format("Pierwiastek 1: %f\nPierwiastek 2: %f",(-b+delta)/2*a,(-b-delta)/2*a);
+        }
+    }
+    public static void lab02_zad2(){
+        boolean flag = true;
+        int choice;
+        while(flag){
+            System.out.println("\n==========\n1)Suma    2)Różnica\n3)Iloczyn    4)Iloraz\n5)Potęga    6)Pierwiastek\n7)Trygonometria    8)Zamknij");
+            choice = (int)getDouble("Wybór: ");
+            System.out.print("\n==========\n");
+            switch(choice){
+                case 1->sum();
+                case 2->diff();
+                case 3->times();
+                case 4->div();
+                case 5->pow();
+                case 6->sqrt();
+                case 7->tryg();
+                case 8->flag=false;
+            }
+        }
+    }
+    public static void sum(){
+        double in1=getDouble("Liczba 1: ");
+        double in2=getDouble("Liczba 2: ");
+        System.out.format("Suma: %f \n==========\n",in1+in2);
+    }
+    public static void diff(){
+        double in1=getDouble("Liczba 1: ");
+        double in2=getDouble("Liczba 2: ");
+        System.out.format("Różnica: %f \n==========\n",in1-in2);
+    }
+    public static void times(){
+        double in1=getDouble("Liczba 1: ");
+        double in2=getDouble("Liczba 2: ");
+        System.out.format("Iloczyn: %f \n==========\n",in1*in2);
+    }
+    public static void div(){
+        double in1=getDouble("Licznik: ");
+        double in2=getDouble("Mianownik: ");
+        System.out.format("Iloraz: %f \n==========\n",in1/in2);
+    }
+    public static void pow(){
+        double in1=getDouble("Podstawa: ");
+        double in2=getDouble("Wykładnik: ");
+        System.out.format("Potęga: %f \n==========\n",Math.pow(in1,in2));
+    }
+    public static void sqrt(){
+        double in1=getDouble("Podstawa: ");
+        System.out.format("Pierwiastek: %f \n==========\n",Math.sqrt(in1));
+    }
+    public static void tryg(){
+        double in1=getDouble("Liczba 1: ");
+        System.out.format("Sin: %f\nCos: %f \n==========\n",Math.sin(Math.toDegrees(in1)),Math.cos(Math.toDegrees(in1)));
+    }
+    //////////////////
+    public static void lab02_zad5(){
+        for (int i = 20; i > 0; i--) {
+            if (i == 2||i == 6||i == 9||i == 15||i == 19) {
+                continue;
+            }
+            System.out.println(i);
+        }
+    }
+    public static void lab02_zad6(){
+        while(true){
+            if(getDouble("Podaj liczbę: ")<0) break;
+        }
+    }
+    public static void lab02_zad7(){
+        //Sortowanie bąbelkowe
+        int n=(int)getDouble("Rozmiar listy: ");
+        int[] Lista;
+        Lista = new int[n];
+        //Pobieranie
+        for(int i=0;i<n;i++){
+            Lista[i]=(int)getDouble(": ");
+        }
+        //Sortowanie
+        for(int j=0;j<n;j++) {
+            for (int i = 0; i < n-1; i++) {
+                if (Lista[i] < Lista[i+1]) {
+                    int temp1=Lista[i];
+                    int temp2=Lista[i+1];
+                    Lista[i] =temp2;
+                    Lista[i+1]=temp1;
+                }
+            }
+        }
+        //Drukowanie
+        for(int i=0;i<n;i++){
+            System.out.format(" %d :",Lista[i]);
+        }
+    }
+    //////////////////Lab03
+    public static void lab03_zad1(){
+        int n=(int)getDouble("Ilość studentów: ");
+        int counter = n;
+        int suma=0;
+        while(counter>0){
+            suma = suma + (int)getDouble("ocena:");
+            counter--;
+        }
+        System.out.format("Średnia: %f",(float)suma/n);
+    }
+    public static void lab03_zad2(){
+        int negativeCounter=0;
+        int positiveCounter=0;
+        int sum=0;
+        for(int i=0;i<10;i++){
+            int a=(int)getDouble("Podaj liczbę: ");
+            if(a>=0){
+                positiveCounter++;
+            }else{
+                negativeCounter++;
+            }
+            sum=sum+a;
+        }
+        System.out.format("Ilość liczb dodatnich: %d\nIlość liczb ujemnych %d\nSuma: %d",positiveCounter,negativeCounter,sum);
+    }
+    public static void lab03_zad3(){
+        int n=(int)getDouble("Długość ciągu: ");
+        int sum=0;
+        for(int i=0;i<n;i++){
+            int a = (int)getDouble(": ");
+            if(a%2==0){
+                sum = sum + a;
+            }
+        }
+        System.out.format("Suma liczb parzystych: %d",sum);
+    }
+    public static void lab03_zad4(){
+        int n=(int)getDouble("Długość ciągu: ");
+        int sum=0;
+        //Tworzenie ciągu
+        Random randomNumber = new Random();
+        for(int i=0;i<n;i++){
+            int a = randomNumber.nextInt(-10,46);
+            System.out.format("|%d",a);
+            if(a%2==0){
+                sum = sum + a;
+            }
+        }
+        System.out.format("\n Suma liczb parzystych: %d",sum);
+    }
+    public static void lab03_zad5(){
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Podaj słowo: ");
+        String word= scan.next();
+        String revWord="";
+        for(int i=0;i< word.length();i++){
+            //tworzę drugi string który jest odwrotny od podanego
+            revWord = revWord + word.charAt(word.length()-i-1);
+        }
+        if(word.equals(revWord)){
+            System.out.format("%s jest palindromem", word);
+        }else{
+            System.out.format("%s nie jest palindromem", word);
+        }
+    }
+}
+
