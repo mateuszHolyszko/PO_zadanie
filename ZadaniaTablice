@@ -1,0 +1,113 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        //Zad1(30);
+//        int[]tab1=new int[]{2,4,6,1,2,3};
+//        int[]tab2=new int[]{3,6,2,2,1};
+//        Zad2(tab1);
+//        Zad2(tab2);
+        //Zad3();
+        //Zad4();
+        //Zad5();
+        //Zad6();
+        //Zad7();
+
+    }
+
+    private static void Zad1(int arraySize){
+        int sum=0;
+        int[] array=new int[arraySize];
+        for (int i = 0; i < arraySize; i++) {
+            Random rand = new Random();
+            int int_random = rand.nextInt(50);
+            array[i]=int_random;
+            System.out.format("%d ",array[i]);
+            sum= sum + array[i];
+        }
+        System.out.format("Sum: %d, Average: %f",sum,(float)sum/arraySize);
+    }
+    private static void Zad2(int[] array){
+        for (int i = 0; i <array.length; i=i+2) {
+            System.out.format("%d ",array[i]);
+        }
+    }
+    private static void Zad3(){
+        String[] str =new String[]{"sample ","text ","sample"};
+        for (String i:str) {
+            System.out.print(i.toUpperCase());
+        }
+    }
+    private static void Zad4(){
+        Scanner input = new Scanner(System.in);
+        String[] str=new String[5];
+        for (int i = 0; i < 5; i++) {
+            str[i]=input.next();
+        }
+        for (int i = 5-1; i > 0-1; i--) {
+            System.out.format("%s ",invertString(str[i]));
+        }
+    }
+    private static String invertString(String str){
+        String strInverted="";
+        char[] chArr =str.toCharArray();
+        for (int i = chArr.length-1; i >-1; i--) {
+            strInverted = strInverted+chArr[i];
+        }
+        return strInverted;
+    }
+    private static void Zad5(){
+        Scanner input = new Scanner(System.in);
+        int[] array=new int[8];
+        for (int i = 0; i < 8; i++) {
+            array[i] = input.nextInt();
+        }
+        for (int j = 0; j < 8; j++) {
+            for (int i = 0; i < 7; i++) {
+                int temp1;
+                int temp2;
+                if (array[i] < array[i + 1]) {
+                    temp1 = array[i];
+                    temp2 = array[i + 1];
+                    array[i] = temp2;
+                    array[i + 1] = temp1;
+                }
+            }
+        }
+        for (int i:array) {
+            System.out.format("%d ",i);
+        }
+    }
+    private static void Zad6(){
+        Scanner input = new Scanner(System.in);
+        int[] array=new int[5];
+        for (int i = 0; i < 5; i++) {
+            array[i] = input.nextInt();
+        }
+        for (int i = 0; i < 5; i++) {
+          System.out.format(": %d\n",factorial(array[i]));
+        }
+    }
+    private static int factorial(int n){
+        int fact=1;
+        for (int i = 1; i < n+1; i++) {
+            fact = i*fact;
+        }
+        return fact;
+    }
+    private static void Zad7(){
+        Scanner input = new Scanner(System.in);
+        String[] array=new String[3];
+        String[] array1=new String[3];
+        for (int i=0;i<3;i++){
+            array[i]=input.next();
+            array1[i]=array[i];
+        }
+        short counter=0;
+        for (int i=0;i<3;i++){
+            if(array[i].equals(array1[i])) counter++;
+        }
+        if(counter == 3) System.out.print("Are equal");else System.out.print("Are not equal");
+    }
+}
