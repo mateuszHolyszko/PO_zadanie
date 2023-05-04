@@ -1,0 +1,117 @@
+import java.sql.*;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        //setupDataBase();
+
+        Scanner sc =new Scanner(System.in);
+        System.out.format("input teachers name: ");
+        String teacherName = sc.next();
+        System.out.format("input subject: ");
+        String subject = sc.next();
+        System.out.format("input date: ");
+        char[] date = new char[10];
+        date = sc.next().toCharArray();
+        System.out.format("input start time: ");
+        char[] startTime = new char[8];
+        startTime = sc.next().toCharArray();
+
+
+        addStudent(teacherName,subject,date,startTime);
+        displayAttendance();
+
+
+    }
+    static void setupDataBase(){
+        Connection c = null;
+        Statement stmt = null;
+        try { //CREATE_TABLE
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:test.db");
+            System.out.println("Opened database successfully");
+            stmt = c.createStatement();
+            String sql = "CREATE TABLE ATTENDANCE_LIST1" +
+                    "(TEACHER TEXT NOT NULL, "
+                    + " SUBJECT TEXT NOT NULL, "
+                    + " STUDENTS TEXT NOT NULL, "
+                    + " ALBUM INT NOT NULL, "
+                    + " DATE CHAR(10), "
+                    + " LOG_IN_TIME CHAR(8), "
+                    + " LOG_OUT_TIME CHAR(8), "
+                    + " TIME_IN INT )";
+            stmt.executeUpdate(sql);
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        System.out.println("Table created successfully");
+    }
+
+    static void addStudent (String teacher, String subject, char[] date, char[] startTime) {
+        Scanner sc = new Scanner(System.in);
+        System.out.format("\n\nInput students name : ");
+        String studentsName = sc.next();
+        System.out.format("Input students album");
+        int album = sc.nextInt();
+
+        //Append to data base
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:test.db");
+            c.setAutoCommit(false);
+            System.out.println("Opened database successfully");
+
+            stmt = c.createStatement();
+            String sql = "INSERT INTO ATTENDANCE_LIST1 (TEACHER,SUBJECT,DATE,LOG_IN_TIME,STUDENTS,ALBUM,LOG_IN_TIME) " +
+                    "VALUES ('"+teacher+"','"+subject+"','"+date+"','"+startTime+"','"+studentsName+"',"+album+",'"+startTime+"');";
+            stmt.executeUpdate(sql);
+            stmt.close();
+
+            c.commit();
+            c.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Records created successfully");
+
+
+    }
+
+    static void displayAttendance (){
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:test.db");
+            c.setAutoCommit(false);
+            System.out.println("Opened database successfully");
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery( "SELECT * FROM ATTENDANCE_LIST1;" );
+
+            int index=0;
+            while ( rs.next() ) {
+                index++;
+                int album = rs.getInt("album");
+                String students = rs.getString("students");
+                String logOutTime =rs.getString("log_out_time");
+
+                System.out.format("student %d :\n  album: %d\n  students name: %s\n\n\n",index,album,students);
+
+            }
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        }
+
+
+    }
